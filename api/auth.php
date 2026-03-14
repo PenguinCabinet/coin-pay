@@ -11,7 +11,7 @@ function authenticate() {
 
     $token = str_replace("Bearer ", "", $headers["Authorization"]);
 
-    $db = new PDO("sqlite:database.db");
+    $db = new PDO("sqlite:" . __DIR__ . "/database.db");
 
     $stmt = $db->prepare("SELECT * FROM tokens WHERE token = ?");
     $stmt->execute([$token]);

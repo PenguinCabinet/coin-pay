@@ -1,6 +1,6 @@
 <?php
 
-$db = new PDO("sqlite:database.db");
+$db = new PDO("sqlite:" . __DIR__ . "/database.db");
 
 try{
     $data = json_decode(file_get_contents("php://input"), true, 512, JSON_THROW_ON_ERROR);

@@ -1,18 +1,14 @@
 <?php
 
 /*データベースを読み込み*/
-$db = new PDO("sqlite:database.db");
+$db = new PDO("sqlite:" . __DIR__ . "/database.db");
 
-try{
-    /*php://inputは、HTTPリクエストのBody*/
-    $data = json_decode(file_get_contents("php://input"), true, 512, JSON_THROW_ON_ERROR);
-}catch (JsonException $e) {
+if (!(isset($_POST["username"])&&isset($_POST["password"]))) {
     http_response_code(400);
     exit;
 }
-
-$username = $data["username"];
-$password = password_hash($data["password"], PASSWORD_DEFAULT);
+$username = $_POST["username"];
+$password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 $stmt = $db->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
 $stmt->execute([$username, $password]);
