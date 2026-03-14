@@ -14,6 +14,11 @@ CREATE TABLE IF NOT EXISTS tokens (
     user_id INTEGER,
     expires INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS users_data (
+    user_id TEXT PRIMARY KEY,
+    owncoin INTEGER
+);
 ");
 
 echo "DB initialized";

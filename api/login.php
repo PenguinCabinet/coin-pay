@@ -2,7 +2,6 @@
 require "../common/login.php";
 $db = new PDO("sqlite:../database.db");
 
-
 if (!(isset($_POST["username"])&&isset($_POST["password"]))) {
     http_response_code(400);
     exit;

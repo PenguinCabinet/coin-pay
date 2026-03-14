@@ -12,8 +12,11 @@ $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 $stmt = $db->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
 $stmt->execute([$username, $password]);
+$user_id = $db->lastInsertId();
+
+$stmt = $db->prepare("INSERT INTO users_data (user_id, owncoin) VALUES (?, ?)");
+$stmt->execute([$user_id, 50]);
 
 http_response_code(201);
 
-//login($_POST["username"],$_POST["password"],$db);
 echo json_encode(login($_POST["username"],$_POST["password"],$db));
