@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+>
+
+<title>コインを送金</title>
+</head>
+
+<body>
+
+<main class="container">
+
+<h2>コインを送金</h2>
+
+<form id="form" method="post" action="/api/pay.php">
+
+<label>
+送金先のユーザーID
+<input
+type="text"
+name="recipient"
+placeholder="0"
+required
+>
+</label>
+
+<label>
+送金するコイン数
+<input
+type="number"
+name="price"
+placeholder="10"
+required
+>
+</label>
+
+<button type="submit">
+送金
+</button>
+
+</form>
+
+<script>
+document.getElementById("form").addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  console.log(e.target)
+
+  const form = new FormData(e.target);
+
+  console.log(form)
+
+  const res = await fetch("/api/pay.php", {
+    method: "POST",
+    body: form,
+    headers: {
+      "Authorization": "Bearer "+localStorage.getItem("token")
+    }
+  });
+
+  const status = await res.status
+
+  if(status==200){
+    alert("送金成功")
+  }else{
+    alert("送金失敗")
+  }
+
+});
+</script>
+
+</main>
+
+</body>
+</html>
