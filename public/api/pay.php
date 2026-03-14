@@ -30,6 +30,10 @@ $stmt1 = $db->prepare("SELECT * FROM users_data WHERE user_id = ?");
 $stmt1->execute([$userId]);
 $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
 
+$stmt1->execute([$recipient]);
+$recipient_row = $stmt1->fetch(PDO::FETCH_ASSOC);
+
+
 
 /*所有する金額<送金額ならロールバックする*/
 if($row1["owncoin"]<$price){
@@ -38,10 +42,10 @@ if($row1["owncoin"]<$price){
     exit;
 }
 
-$stmt2 = $db->prepare("UPDATE users_data SET owncoin=? WHERE user_id=?");
-$stmt2->execute([$row1["owncoin"]-$price,$userId]);
+$stmt3 = $db->prepare("UPDATE users_data SET owncoin=? WHERE user_id=?");
+$stmt3->execute([$row1["owncoin"]-$price,$userId]);
 
-$stmt2->execute([$row1["owncoin"]+$price,$recipient]);
+$stmt3->execute([$recipient_row["owncoin"]+$price,$recipient]);
 
 $db->commit();
 
