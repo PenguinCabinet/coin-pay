@@ -1,6 +1,6 @@
 <?php
 
-require "auth.php";
+require "../../common/auth.php";
 
 $db = new PDO("sqlite:../../database/database.db");
 $userId = authenticate($db);
