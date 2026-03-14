@@ -1,7 +1,7 @@
 <?php
+require "../common/login.php";
 
-/*データベースを読み込み*/
-$db = new PDO("sqlite:" . __DIR__ . "/database.db");
+$db = new PDO("sqlite:../database.db");
 
 if (!(isset($_POST["username"])&&isset($_POST["password"]))) {
     http_response_code(400);
@@ -15,3 +15,5 @@ $stmt->execute([$username, $password]);
 
 http_response_code(201);
 
+//login($_POST["username"],$_POST["password"],$db);
+echo json_encode(login($_POST["username"],$_POST["password"],$db));

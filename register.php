@@ -1,2 +1,2 @@
 <?php
-readfile("register_front.html");
+readfile("register.html");

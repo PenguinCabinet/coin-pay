@@ -18,7 +18,7 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
 
 <h2>ユーザー登録</h2>
 
-<form method="post" action="/api/register.php">
+<form id="form" method="post" action="/api/register.php">
 
 <label>
 ユーザー名
@@ -45,6 +45,27 @@ required
 </button>
 
 </form>
+
+<script>
+document.getElementById("form").addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  const form = new FormData(e.target);
+
+  const res = await fetch("/api/register.php", {
+    method: "POST",
+    body: form
+  });
+
+  const data = await res.json();
+
+  localStorage.setItem("token", data.token);
+
+  location.href="/profile"
+
+});
+</script>
 
 </main>
 
