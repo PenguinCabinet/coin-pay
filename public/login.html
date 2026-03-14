@@ -58,11 +58,15 @@ document.getElementById("form").addEventListener("submit", async (e) => {
     body: form
   });
 
-  const data = await res.json();
+  if((await res.status)==200){
+    const data = await res.json();
 
-  localStorage.setItem("token", data.token);
+    localStorage.setItem("token", data.token);
 
-  location.href="/home.php"
+    location.href="/home.php"
+  }else{
+    alert("ログイン失敗")
+  }
 
 });
 </script>
