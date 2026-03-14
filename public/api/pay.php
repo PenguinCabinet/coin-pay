@@ -2,7 +2,7 @@
 
 require "auth.php";
 
-$db = new PDO("sqlite:../database.db");
+$db = new PDO("sqlite:../../database/database.db");
 $userId = authenticate($db);
 
 if (!(isset($_POST["price"])&&isset($_POST["recipient"]))) {

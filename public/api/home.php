@@ -2,7 +2,7 @@
 
 require "auth.php";
 
-$db = new PDO("sqlite:../database.db");
+$db = new PDO("sqlite:../../database/database.db");
 $userId = authenticate($db);
 
 $stmt1 = $db->prepare("SELECT * FROM users WHERE id = ?");
