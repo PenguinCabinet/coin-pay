@@ -38,7 +38,7 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
   let app_elem=document.getElementById("app");
 
   const p1 = document.createElement("p");
-  p1.textContent = `ようこそ：${data["username"]}さん`;
+  p1.textContent = `ようこそ：${data["username"]}さん，ユーザID${data["user_id"]}`;
 
   const p2 = document.createElement("p");
   p2.textContent = `現在所有しているコイン：${data["owncoin"]}`;
