@@ -1,6 +1,10 @@
 <?php
 
-$db = new PDO("sqlite:../database/database.db");
+if (!is_dir("./database")) {
+    mkdir("./database", 0755, true);
+}
+
+$db = new PDO("sqlite:./database/database.db");
 
 $db->exec("
 CREATE TABLE IF NOT EXISTS users (
