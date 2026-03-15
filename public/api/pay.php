@@ -16,13 +16,10 @@ if ($price<=0) {
     http_response_code(400);
     exit;
 }
-error_log($recipient.$userId);
 if ($recipient==$userId) {
     http_response_code(400);
     exit;
 }
-
-error_log("test3");
 
 $db->beginTransaction();
 
@@ -32,8 +29,6 @@ $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
 
 $stmt1->execute([$recipient]);
 $recipient_row = $stmt1->fetch(PDO::FETCH_ASSOC);
-
-
 
 /*所有する金額<送金額ならロールバックする*/
 if($row1["owncoin"]<$price){
