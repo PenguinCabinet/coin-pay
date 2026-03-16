@@ -33,20 +33,23 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     return;
   }
 
-  const data = await res.json();
+  if((await res.status)==200){
 
-  let app_elem=document.getElementById("app");
+    const data = await res.json();
 
-  const p1 = document.createElement("p");
-  p1.textContent = `ようこそ：${data["username"]}さん，ユーザID${data["user_id"]}`;
+    let app_elem=document.getElementById("app");
 
-  const p2 = document.createElement("p");
-  p2.textContent = `現在所有しているコイン：${data["owncoin"]}`;
+    const p1 = document.createElement("p");
+    p1.textContent = `ようこそ：${data["username"]}さん，ユーザID${data["user_id"]}`;
 
-  app_elem.replaceChildren();
+    const p2 = document.createElement("p");
+    p2.textContent = `現在所有しているコイン：${data["owncoin"]}`;
 
-  app_elem.appendChild(p1);
-  app_elem.appendChild(p2);
+    app_elem.replaceChildren();
+
+    app_elem.appendChild(p1);
+    app_elem.appendChild(p2);
+  }
 })();
 
 </script>
