@@ -3,13 +3,17 @@
 function login($username,$password,$db){
 
     $stmt = $db->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->execute([$username]);
-
+    $result = $stmt->execute([$username]);
+    /*SQL文が実行に失敗した場合、ステータスコード500をレスポンス*/
+    if (!$result) {
+        http_response_code(500);
+        exit;
+    }
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    /**ユーザーが存在しないまたはパスワードが異なる場合、ステータスコード401をレスポンス */
     if (!$user || !password_verify($password, $user["password"])) {
         http_response_code(401);
-        echo json_encode(["error" => "invalid login"]);
         exit;
     }
 
@@ -17,9 +21,13 @@ function login($username,$password,$db){
     $expires = time() + 3600;
 
     $stmt = $db->prepare("INSERT INTO tokens (token, user_id, expires) VALUES (?, ?, ?)");
-    $stmt->execute([$token, $user["id"], $expires]);
+    $result = $stmt->execute([$token, $user["id"], $expires]);
+    /*SQL文が実行に失敗した場合、ステータスコード500をレスポンス*/
+    if (!$result) {
+        http_response_code(500);
+        exit;
+    }
 
-    http_response_code(200);
     return ([
         "token" => $token,
         "expires" => $expires
