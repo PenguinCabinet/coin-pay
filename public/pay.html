@@ -61,8 +61,8 @@ document.getElementById("form").addEventListener("submit", async (e) => {
     method: "POST",
     body: form,
     headers: {
-      "Authorization": "Bearer "+localStorage.getItem("token")
-    }
+    },
+    credentials: "include"
   });
 
   const status = await res.status

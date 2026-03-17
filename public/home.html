@@ -25,8 +25,8 @@ href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
   const res = await fetch("/api/home.php", {
     method: "GET",
     headers: {
-      "Authorization": "Bearer "+localStorage.getItem("token"),
       "Content-Type": "application/json",
+      credentials: "include"
     }
   });
   if (!res.ok) {

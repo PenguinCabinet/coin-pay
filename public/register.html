@@ -60,8 +60,6 @@ document.getElementById("form").addEventListener("submit", async (e) => {
 
   const data = await res.json();
 
-  localStorage.setItem("token", data.token);
-
   location.href="/home.php"
 
 });
