@@ -1,2 +1,58 @@
-<?php
-readfile("home.html");
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+>
+
+<title>ユーザページ</title>
+</head>
+
+<body>
+
+<main id="app" class="container">
+<h1>ログインしてください。</h1>
+</main>
+
+<script>
+
+(async function(){
+
+  const res = await fetch("/api/home.php", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      credentials: "include"
+    }
+  });
+  if (!res.ok) {
+    return;
+  }
+
+  if((await res.status)==200){
+
+    const data = await res.json();
+
+    let app_elem=document.getElementById("app");
+
+    const p1 = document.createElement("p");
+    p1.textContent = `ようこそ：${data["username"]}さん，ユーザID${data["user_id"]}`;
+
+    const p2 = document.createElement("p");
+    p2.textContent = `現在所有しているコイン：${data["owncoin"]}`;
+
+    app_elem.replaceChildren();
+
+    app_elem.appendChild(p1);
+    app_elem.appendChild(p2);
+  }
+})();
+
+</script>
+
+</body>
+</html>
