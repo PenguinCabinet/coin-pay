@@ -1,6 +1,7 @@
 <?php
 
 require "../../common/auth.php";
+require "../../common/csrf_token.php";
 
 $db = new PDO("sqlite:../../database/database.db");
 $userId = authenticate($db);
@@ -11,6 +12,16 @@ if (!(isset($_POST["price"])&&isset($_POST["recipient"]))) {
 }
 if(!(is_numeric($_POST["price"])&&is_numeric($_POST["recipient"]))){
     http_response_code(400);
+    exit;
+}
+
+/*csrf_tokenが適切ではない場合、ステータスコード403を返却*/
+if (
+    empty($_POST['csrf_token']) ||
+    empty($_SESSION['csrf_token']) ||
+    !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+) {
+    http_response_code(403);
     exit;
 }
 
@@ -80,8 +91,5 @@ $db->commit();
 
 http_response_code(200);
 
-echo json_encode([
-    "user_id" => $row2["user_id"],
-    "username" => $row1["username"],
-    "owncoin" => $row2["owncoin"]
-]);
+/*リクエストのたび、CSRFトークンを再生成 */
+regenerate_csrf_token();
