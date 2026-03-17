@@ -1,25 +1,12 @@
 <?php
 
 function authenticate($db) {
+    session_start();
 
-    $headers = getallheaders();
-
-    if (!isset($headers["Authorization"])) {
+    if (!isset($_SESSION['user_id'])) {
         http_response_code(401);
         exit;
     }
 
-    $token = str_replace("Bearer ", "", $headers["Authorization"]);
-
-    $stmt = $db->prepare("SELECT * FROM tokens WHERE token = ?");
-    $stmt->execute([$token]);
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$row || $row["expires"] < time()) {
-        http_response_code(401);
-        exit;
-    }
-
-    return $row["user_id"];
+    return $_SESSION['user_id'];
 }

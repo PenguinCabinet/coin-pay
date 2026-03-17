@@ -13,12 +13,6 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT
 );
 
-CREATE TABLE IF NOT EXISTS tokens (
-    token TEXT PRIMARY KEY,
-    user_id INTEGER,
-    expires INTEGER
-);
-
 CREATE TABLE IF NOT EXISTS users_data (
     user_id TEXT PRIMARY KEY,
     owncoin INTEGER

@@ -17,19 +17,8 @@ function login($username,$password,$db){
         exit;
     }
 
-    $token = bin2hex(random_bytes(32));
-    $expires = time() + 3600;
+    session_start();
+    $_SESSION['user_id'] = $user["id"];
 
-    $stmt = $db->prepare("INSERT INTO tokens (token, user_id, expires) VALUES (?, ?, ?)");
-    $result = $stmt->execute([$token, $user["id"], $expires]);
-    /*SQL文が実行に失敗した場合、ステータスコード500をレスポンス*/
-    if (!$result) {
-        http_response_code(500);
-        exit;
-    }
-
-    return ([
-        "token" => $token,
-        "expires" => $expires
-    ]);
+    return $_SESSION['user_id'];
 }
